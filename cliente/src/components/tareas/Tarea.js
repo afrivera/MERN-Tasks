@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Tarea = () => {
+const Tarea = ({ tarea }) => {
     return (
         <div>Tarea</div>
     )
