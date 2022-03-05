@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
+import AlertaContext from '../../context/alertas/alertaContext';
 
 
 const NuevaCuenta = () => {
+
+    // extraer valores del context de alerta
+    const { alerta, mostrarAlerta} = useContext( AlertaContext );
 
     // state para iniciar sesión
     const [usuario, setUsuario] = useState({
@@ -27,10 +31,22 @@ const NuevaCuenta = () => {
         e.preventDefault();
 
         // validar que no hayan campos vacios
+        if( nombre.trim() === '' || email.trim() === '' || password.trim() === '' || confirmar.trim() === ''){
+            mostrarAlerta('Todos los Campos son Obligatorios', 'alerta-error');
+            return;
+        }
 
         // password min 6 carac
+        if( password.length < 6 ){
+            mostrarAlerta('El password debe ser de al menos 6 caracteres', 'alerta-error');
+            return ;
+        }
 
         // validar password sean iguales
+        if( password !== confirmar ){
+            mostrarAlerta('Los password no coinciden', 'alerta-error');
+            return ;
+        }
 
         // pasarlo al action
         
@@ -39,6 +55,10 @@ const NuevaCuenta = () => {
 
     return (
         <div className='form-usuario'>
+            {
+                    alerta && 
+                        <div className={`alerta ${alerta.categoria}`}>{ alerta.msg} </div>
+            }
             <div className="contenedor-form sombra-dark">
                 <h1>Crear Cuenta</h1>
                 <form
@@ -97,6 +117,7 @@ const NuevaCuenta = () => {
                         />
                     </div>
                 </form>
+                
                 <Link to={'/'} className='enlace-cuenta'>Volver a Iniciar Sesión</Link>
             </div>
         </div>
