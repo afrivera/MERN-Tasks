@@ -66,7 +66,6 @@ exports.actualizarProyecto = async (req, res)=> {
 // función para eliminar un proyecto por id
 exports.eliminarProyecto = async(req, res)=> {
     const { id } = req.params;
-    console.log(id)
 
     try {
         // validar el creador
@@ -76,7 +75,6 @@ exports.eliminarProyecto = async(req, res)=> {
         }
 
         // eliminar el proyecto
-        console.log('aqui llega')
         await Proyecto.findOneAndDelete({ id });
         res.json({msg: 'Proyecto Eliminado'});
 
