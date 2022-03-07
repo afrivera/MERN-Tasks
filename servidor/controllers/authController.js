@@ -31,11 +31,24 @@ exports.autenticarUsuario = async( req, res )=> {
 
         res.json({
             estado: true,
-            token
+            token,
         })        
         
     } catch (error) {
         console.log(error);
+        res.status(500).json({msg: 'Hubo un error'});
     }
 
+}
+ 
+// 
+exports.usuarioAutenticado = async( req, res )=> {
+    try {
+        const usuario = await Usuario.findById( req.usuarioId).select('-password');
+        res.json(usuario);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: 'Hubo un error'});
+    }
 }

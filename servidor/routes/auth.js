@@ -1,12 +1,13 @@
 // Rutas para autenticar usuarios
 const { Router } = require('express');
 const { check} = require('express-validator');
-const { autenticarUsuario } = require('../controllers/authController');
+const { autenticarUsuario, usuarioAutenticado } = require('../controllers/authController');
+const { validarJWT } = require('../middlewares/auth');
 const { validarCampos } = require('../middlewares/validar-campos');
 
 const router = Router();
 
-// crea un usuario
+// Iniciar sesión
 // api/auth
 router.post('/', 
     [
@@ -15,6 +16,10 @@ router.post('/',
         validarCampos
     ],
     autenticarUsuario 
-)
+);
+
+// obtiene usuario autenticado
+router.get('/',  validarJWT,
+usuarioAutenticado)
 
 module.exports = router;

@@ -29,7 +29,11 @@ exports.crearUsuario = async (req, res)=> {
         const token = await generarJWT( usuario.id )
 
         // mensaje de confirmación
-        res.status(201).json({msg: 'Usuario Creado Correctamente', token });
+        res.status(201).json({
+            msg: 'Usuario Creado Correctamente', 
+            token,
+            usuario: usuario.nombre
+        });
 
     } catch (error) {
         console.log(error);

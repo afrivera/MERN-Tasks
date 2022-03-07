@@ -1,12 +1,28 @@
-import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import AlertaContext from '../../context/alertas/alertaContext';
+import AuthContext from '../../context/autenticacion/authContext';
 
 
 const NuevaCuenta = () => {
 
+    const navigate = useNavigate();
+
     // extraer valores del context de alerta
     const { alerta, mostrarAlerta} = useContext( AlertaContext );
+
+    // extraer función del context auth
+    const { mensaje, autenticado, registrarUsuario } =useContext( AuthContext );
+
+    // en caso de que el usuario se haya autenti cado o registrado o sea un registro duplicado
+    useEffect(()=>{
+        // if( autenticado ){
+        //     navigate('/proyectos')
+        // }
+        if( mensaje ){
+            mostrarAlerta( mensaje.msg, mensaje.categoria);
+        }
+    },[mensaje, autenticado, navigate ]);
 
     // state para iniciar sesión
     const [usuario, setUsuario] = useState({
@@ -49,6 +65,11 @@ const NuevaCuenta = () => {
         }
 
         // pasarlo al action
+        registrarUsuario({
+            nombre,
+            email,
+            password
+        });
         
     }
 
