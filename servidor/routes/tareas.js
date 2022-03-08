@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { crearTarea, obtenerTareas, actualizarTarea, borrarTarea } = require('../controllers/tareasController');
-const { existeProyectoPorId } = require('../helpers/db-validator');
+const { existeProyectoPorId, existeProyectoId } = require('../helpers/db-validator');
 const { validarJWT } = require('../middlewares/auth');
 const { validarCampos } = require('../middlewares/validar-campos');
 
@@ -25,10 +25,7 @@ crearTarea);
 router.get('/',
     [
         validarJWT,
-        check('proyecto', 'El id del proyecto es obligatorio').not().isEmpty(),
-        check('proyecto', 'No es un proyecto válido').isMongoId(),
-        check('proyecto').custom(existeProyectoPorId),
-        validarCampos
+        existeProyectoId
     ],
 obtenerTareas);
 
@@ -50,8 +47,8 @@ router.delete('/:id',
         check('id', 'El id de la Tarea es obligatorio').not().isEmpty(),
         check('id', 'No es un documento válido').isMongoId(),
         check('proyecto', 'No es un proyecto válido').isMongoId(),
-        check('proyecto').custom(existeProyectoPorId),
-        validarCampos
+        validarCampos,
+        existeProyectoId
     ],
 borrarTarea)
 

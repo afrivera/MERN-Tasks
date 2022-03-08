@@ -8,6 +8,7 @@ const RutaPrivada = ({ children }) => {
 
     useEffect(()=> {
         usuarioAutenticado();
+        // eslint-disable-next-line
     },[])
 
     return !autenticado && !cargando ? (

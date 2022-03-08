@@ -27,6 +27,7 @@ const Login = () => {
             mostrarAlerta( mensaje.msg, mensaje.categoria );
         }
 
+        // eslint-disable-next-line
     }, [mensaje, autenticado, navigate])
 
     // extraer los datos de usuario

@@ -1,4 +1,3 @@
-import { useReducer } from 'react';
 import {
     REGISTRO_EXITOSO,
     REGISTRO_ERROR,
@@ -8,6 +7,7 @@ import {
     CERRAR_SESION
 } from '../../types/index.js'
 
+/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default (state, action ) => {
     switch (action.type) {
         case LOGIN_EXITOSO:
