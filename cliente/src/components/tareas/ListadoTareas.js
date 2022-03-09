@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import alertaContext from '../../context/alertas/alertaContext';
 
 import proyectoContext from '../../context/proyectos/proyectoContext'
 import tareaContext from '../../context/tareas/tareaContext-';
@@ -14,7 +15,16 @@ const ListadoTareas = () => {
 
     // obtener las tareas del proyecto
     const tareasContext = useContext( tareaContext);
-    const { tareasproyecto } = tareasContext;
+    const { mensaje, tareasproyecto } = tareasContext;
+
+    const { alerta, mostrarAlerta } = useContext(alertaContext);
+
+    useEffect(()=> {
+        if( mensaje ){
+            mostrarAlerta(mensaje.msg, mensaje.categoria);
+        }
+        // eslint-disable-next-line
+    },[mensaje]);
 
     // si no hay proyecto seleccionado
     if(!proyecto) return <h2>Selecciona un Proyecto</h2>
@@ -28,6 +38,10 @@ const ListadoTareas = () => {
 
     return (
         <>
+            {
+                alerta &&
+                <div className={`alerta ${alerta.categoria}`}>{ alerta.msg }</div>
+            }
             <h2>Proyecto: { proyectoActual.nombre }</h2>
 
             <ul className='listado-tareas'>

@@ -5,7 +5,8 @@ import {
     ELIMINAR_TAREA,
     TAREA_ACTUAL,
     ACTUALIZAR_TAREA,
-    LIMPIAR_TAREA
+    LIMPIAR_TAREA,
+    TAREA_ERROR
  } from '../../types'
  import { useReducer } from 'react'
 
@@ -19,6 +20,7 @@ const TareaState = props => {
         tareasproyecto: [],
         errortarea: false, 
         tareaseleccionada: null,
+        mensaje: null
     }
 
     // crear state y dispatch
@@ -35,7 +37,15 @@ const TareaState = props => {
                 payload: data.tareas
             });
         } catch (error) {
-            console.log(error.response);
+            // console.log(error.response);
+            const alerta = {
+                msg: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: TAREA_ERROR,
+                payload: alerta
+            })
         }
     }
 
@@ -48,7 +58,15 @@ const TareaState = props => {
                 payload: data
             })
         } catch (error) {
-            console.log(error.response);
+            // console.log(error.response);
+            const alerta = {
+                msg: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: TAREA_ERROR,
+                payload: alerta
+            })
         }
     }
 
@@ -69,7 +87,15 @@ const TareaState = props => {
                 payload: id
             });
         } catch (error) {
-            console.log(error.response);
+            // console.log(error.response);
+            const alerta = {
+                msg: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: TAREA_ERROR,
+                payload: alerta
+            })
         }
     }
 
@@ -82,7 +108,15 @@ const TareaState = props => {
                 payload: data.tareaActualizada
             })
         } catch (error) {
-            console.log(error.response);
+            // console.log(error.response);
+            const alerta = {
+                msg: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: TAREA_ERROR,
+                payload: alerta
+            })
         }
     }
 
@@ -109,6 +143,7 @@ const TareaState = props => {
                 tareasproyecto: state.tareasproyecto,
                 errortarea: state.errortarea,
                 tareaseleccionada: state.tareaseleccionada,
+                mensaje: state.mensaje,
 
                 obtenerTareas,
                 agregarTarea,
